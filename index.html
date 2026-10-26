@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wires Beneath the Waves — Undersea Internet Cables | Motion Film</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;800;900&family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="vignette"></div>
+<div id="grain"></div>
+<div id="labels"></div>
+
+<main id="hud">
+  <div id="chapter"><span id="chapNum">01</span><span id="chapName">PROLOGUE</span></div>
+  <h1 id="title"></h1>
+  <div id="kicker"></div>
+  <div id="year"></div>
+
+  <aside id="card" class="hide">
+    <div class="card-tag">CABLE FILE</div>
+    <div id="cName" class="card-name"></div>
+    <div class="card-row"><span>READY FOR SERVICE</span><b id="cYear"></b></div>
+    <div class="card-row"><span>LENGTH</span><b id="cLen"></b></div>
+    <div class="card-row"><span>ROUTE</span><b id="cRoute"></b></div>
+    <div class="card-row col"><span>OWNERS</span><b id="cOwn"></b></div>
+    <div class="card-row col"><span>WHO CONTROLS IT</span><b id="cCtrl"></b></div>
+    <div class="card-bar"><i id="cProg"></i></div>
+  </aside>
+
+  <!-- Chapter: how a cable is laid -->
+  <section id="ovLay" class="overlay">
+    <svg viewBox="0 0 1000 520" class="laysvg">
+      <defs>
+        <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a3a5c" stop-opacity=".85"/><stop offset="1" stop-color="#010812" stop-opacity=".95"/></linearGradient>
+      </defs>
+      <rect x="0" y="120" width="1000" height="400" fill="url(#sea)"/>
+      <path class="wave" d="M0 120 Q 50 110 100 120 T 200 120 T 300 120 T 400 120 T 500 120 T 600 120 T 700 120 T 800 120 T 900 120 T 1000 120 T 1100 120" stroke="#5fe1ff" fill="none" stroke-width="2"/>
+      <path d="M0 470 Q 150 440 300 470 T 600 455 T 1000 475 L1000 520 L0 520Z" fill="#06121d"/>
+      <g class="ship">
+        <path d="M-120 100 L120 100 L95 132 L-100 132Z" fill="#e8eef5"/>
+        <rect x="-60" y="70" width="70" height="30" fill="#ff5a3c"/><rect x="20" y="80" width="40" height="20" fill="#cfd8e3"/>
+        <rect x="-40" y="50" width="12" height="20" fill="#222"/>
+        <circle cx="105" cy="104" r="10" fill="none" stroke="#ffd166" stroke-width="4"/>
+      </g>
+      <path class="layline" d="M600 125 C 560 260, 470 420, 300 462 L -20 470" stroke="#ffd166" fill="none" stroke-width="3"/>
+      <g class="plow"><rect x="-22" y="-12" width="44" height="18" rx="4" fill="#ffd166"/><path d="M-22 6 L-34 14 L30 14 L22 6Z" fill="#aa8a3a"/></g>
+      <g class="rep"><circle cx="420" cy="452" r="7" fill="#5fe1ff"/><text x="420" y="430" text-anchor="middle">REPEATER · every 50–100 km</text></g>
+      <text x="40" y="170" class="lbl">CABLE SHIP · 3–7 knots · 24/7</text>
+      <text x="40" y="505" class="lbl">SEABED · avg. depth 3.6 km · deepest lay ≈ 8 km</text>
+    </svg>
+    <div class="xsec">
+      <div class="ring r6"><div class="ring r5"><div class="ring r4"><div class="ring r3"><div class="ring r2"><div class="ring r1"></div></div></div></div></div></div>
+      <ul>
+        <li><i style="background:#5fe1ff"></i>Optical fibres — hair-thin glass, 8–24 pairs</li>
+        <li><i style="background:#ffd166"></i>Petroleum jelly + steel tube</li>
+        <li><i style="background:#ff8a3c"></i>Copper sheath — powers repeaters (≈10 kV)</li>
+        <li><i style="background:#9aa7b8"></i>Steel wire armour (shallow water only)</li>
+        <li><i style="background:#334"></i>Polyethylene jacket — total Ø ≈ 17–50 mm</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Chapter: who controls -->
+  <section id="ovCtrl" class="overlay">
+    <h3>SHARE OF USED INTERNATIONAL BANDWIDTH</h3>
+    <div class="bars">
+      <div class="bar"><span>Content giants<br><small>Google · Meta · Microsoft · Amazon</small></span><i style="--w:71%"></i><b>≈ 70%</b></div>
+      <div class="bar"><span>Everyone else<br><small>telecoms, carriers, ISPs</small></span><i style="--w:29%;--c:#ff8a3c"></i><b>≈ 30%</b></div>
+    </div>
+    <h3>WHO BUILDS THE CABLES</h3>
+    <div class="makers">
+      <div><b>SubCom</b><span>USA</span></div>
+      <div><b>ASN</b><span>France · state-owned</span></div>
+      <div><b>NEC</b><span>Japan</span></div>
+      <div class="cn"><b>HMN Tech</b><span>China · rising</span></div>
+    </div>
+    <p class="note">Source: TeleGeography estimates, 2024–25. Figures approximate.</p>
+  </section>
+
+  <!-- Stats outro -->
+  <section id="ovStats" class="overlay">
+    <div class="stat"><b data-n="600">0</b><span>cable systems active or planned</span></div>
+    <div class="stat"><b data-n="1400000">0</b><span>kilometres of cable on the seabed</span></div>
+    <div class="stat"><b data-n="99">0</b><span>% of intercontinental data</span></div>
+    <div class="stat"><b data-n="200">0</b><span>faults repaired every year</span></div>
+  </section>
+
+  <div id="subs"></div>
+</main>
+
+<div id="controls">
+  <button id="bPlay" title="Play / Pause">❚❚</button>
+  <div id="time">0:00 / 6:00</div>
+  <div id="bar"><div id="barFill"></div><div id="ticks"></div></div>
+  <button id="bVoice" class="on" title="Voice-over">VOICE</button>
+  <button id="bCC" class="on" title="Subtitles">CC</button>
+  <button id="bScript" title="Script with timecodes">SCRIPT</button>
+  <button id="bFS" title="Fullscreen">⛶</button>
+  <div style="border-left: 1px solid rgba(255,255,255,0.2); margin: 0 10px; padding-left: 10px; display: inline-flex; gap: 5px;">
+    <button id="bCapStart" style="background: #ff3b5c; color: white; font-size: 10px; font-family: 'JetBrains Mono'; cursor: pointer;">REC START</button>
+    <button id="bCapStop" style="background: #555; color: white; font-size: 10px; font-family: 'JetBrains Mono'; cursor: pointer;">STOP</button>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+
+<div id="scriptPanel" class="hide"><button id="closeScript">✕</button><h2>Voice-over script</h2><div id="scriptBody"></div></div>
+
+<div id="start">
+  <div class="st-inner">
+    <div class="st-tag">A MOTION FILM · 6:00</div>
+    <h2>WIRES<br>BENEATH<br><em>THE WAVES</em></h2>
+    <p>How humanity wired the ocean floor — and who owns the internet's backbone today.</p>
+    <button id="bStart">▶ PLAY WITH VOICE-OVER</button>
+    <small>Best in fullscreen, sound on. Voice uses your browser's speech engine.</small>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

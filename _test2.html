@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"></head>
+<body><script>
+window.PREVIEW_T=280;
+fetch('index.html').then(r=>r.text()).then(h=>{document.open();document.write(h.replace('<head>','<head><script>window.PREVIEW_T='+window.PREVIEW_T+';<'+'/script>'));document.close();});
+</script></body></html>
